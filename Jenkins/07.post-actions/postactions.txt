@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {    
+                    // Intentional failure
+                    error 'This stage fails on purpose'
+            }
+        }
+    }
+    post {
+        success {
+            // on failure 
+            emailext body: 'success', subject: 'success', to: 'pomab50867@cmheia.com'
+        }
+        failure {
+            // on failure 
+            emailext body: 'pipeline failed', subject: 'failed', to: 'pomab50867@cmheia.com'
+        }
+    }
+}
